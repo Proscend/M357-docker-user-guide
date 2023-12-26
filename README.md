@@ -3,7 +3,7 @@
 ## Quick Installation
 
 ```sh
-sh -c "$(wget -O- https://raw.githubusercontent.com/Proscend/M357-docker-user-guide/master/download.sh)"
+wget -O- https://raw.githubusercontent.com/Proscend/M357-docker-user-guide/master/download.sh | sh
 ```
 
 ## Modbus TCP Simulator to MQTT
