@@ -8,3 +8,4 @@ unzip M357-docker-user-guide.zip -d /tmp/M357-docker-user-guide
 mv /tmp/M357-docker-user-guide/*/* /data/M357-docker-user-guide
 rm -rf /tmp/M357-docker-user-guide
 rm -f /tmp/M357-docker-user-guide.zip
+find /data/M357-docker-user-guide -type f -name "*.sh" -exec chmod +x {} \;
