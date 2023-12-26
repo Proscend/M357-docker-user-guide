@@ -2,28 +2,28 @@
 
 TOP=$(pwd)
 
-build_modbus4mqtt() {
-  docker images | grep -q modbus4mqtt
+build_modbus2mqtt() {
+  docker images | grep -q modbus2mqtt
   if [ $? -eq 0 ]; then
     return 0
   fi
 
-  rm -f /tmp/modbus4mqtt.zip
-  wget -O /tmp/modbus4mqtt.zip https://codeload.github.com/Proscend/modbus4mqtt/zip/refs/heads/master
+  rm -f /tmp/modbus2mqtt.zip
+  wget -O /tmp/modbus2mqtt.zip https://codeload.github.com/Proscend/spicierModbus2mqtt/zip/refs/heads/master
   if [ $? -ne 0 ]; then
-    echo "Download the modbus4mqtt source failure."
+    echo "Download the modbus2mqtt source failure."
     return 1
   fi
 
-  rm -rf /tmp/modbus4mqtt
-  mkdir -p /tmp/modbus4mqtt
-  unzip /tmp/modbus4mqtt.zip -d /tmp/modbus4mqtt
-  mv /tmp/modbus4mqtt/*/* /tmp/modbus4mqtt/
+  rm -rf /tmp/modbus2mqtt
+  mkdir -p /tmp/modbus2mqtt
+  unzip /tmp/modbus2mqtt.zip -d /tmp/modbus2mqtt
+  mv /tmp/modbus2mqtt/*/* /tmp/modbus2mqtt/
 
-  cd /tmp/modbus4mqtt
-  docker build -t modbus4mqtt -f Dockerfile.arm64v6 .
+  cd /tmp/modbus2mqtt
+  docker build -t modbus2mqtt -f Dockerfile.arm64v8 .
   if [ $? -ne 0 ]; then
-    echo "Build the modbus4mqtt docker image failure."
+    echo "Build the modbus2mqtt docker image failure."
     return 1
   fi
 
@@ -37,7 +37,7 @@ build_modbus_server() {
   fi
 
   rm -f /tmp/modbus-server.zip
-  wget -O /tmp/modbus-server.zip https://codeload.github.com/Proscend/modbus-server/zip/refs/heads/master
+  wget -O /tmp/modbus-server.zip https://codeload.github.com/Proscend/modbus-server/zip/refs/heads/main
   if [ $? -ne 0 ]; then
     echo "Download the modbus-server source failure."
     return 1
@@ -49,7 +49,7 @@ build_modbus_server() {
   mv /tmp/modbus-server/*/* /tmp/modbus-server/
 
   cd /tmp/modbus-server
-  docker build -t modbus-server -f Dockerfile.arm64v6 .
+  docker build -t modbus-server -f Dockerfile.arm64v8 .
   if [ $? -ne 0 ]; then
     echo "Build the modbus-server docker image failure."
     return 1
@@ -59,4 +59,4 @@ build_modbus_server() {
 }
 
 build_modbus_server || exit 1
-build_modbus4mqtt || exit 1
+build_modbus2mqtt || exit 1
